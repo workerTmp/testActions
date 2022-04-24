@@ -10,7 +10,9 @@ jobs:
     - name: "jupyter"
 #      if: contains(github.event.label.name, 'jupyter')      
       run: |
-        curl -C - https://pkg.cloudflare.com/pubkey.gpg | sudo apt-key add -
+        echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/ focal main' |
+        sudo tee /etc/apt/sources.list.d/cloudflare-main.list 
+        sudo curl https://pkg.cloudflare.com/cloudflare-main.gpg -o /usr/share/keyrings/cloudflare-main.gpg 
         sudo apt-get update&&sudo apt-get install python3-pip python3-dev cloudflared
         sudo -H pip3 install --upgrade pip
         sudo -H pip3 install virtualenv
