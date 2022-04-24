@@ -10,6 +10,7 @@ jobs:
     - name: "jupyter"
 #      if: contains(github.event.label.name, 'jupyter')      
       run: |
+        ls -al ./
         echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/ focal main' |
         sudo tee /etc/apt/sources.list.d/cloudflare-main.list 
         sudo curl https://pkg.cloudflare.com/cloudflare-main.gpg -o /usr/share/keyrings/cloudflare-main.gpg 
@@ -18,5 +19,5 @@ jobs:
         sudo -H pip3 install virtualenv
         mkdir /opt/jupyter_dir&&cd /opt/jupyter_dir&&virtualenv jupyter_env
         pip3 install jupyter
-        jupyter notebook&
+        jupyter notebook --config=forWorks/jupyter/conf.py&
         cloudflared tunnel --url http://localhost:8888
