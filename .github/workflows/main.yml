@@ -7,6 +7,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
+    - name: "dotnet"
+      run: |
+        wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb 
+        sudo dpkg -i packages-microsoft-prod.deb 
+        sudo apt update 
+        sudo apt install apt-transport-https 
+        sudo apt install dotnet-sdk-3.1 
+        sudo apt update 
+        sudo apt install apt-transport-https 
+        sudo apt install dotnet-runtime-3.1 
+        dotnet tool install -g dotnet-try        
     - name: "jupyter"
 #      if: contains(github.event.label.name, 'jupyter')      
       run: |
@@ -18,6 +29,7 @@ jobs:
         sudo -H pip3 install virtualenv
         mkdir /opt/jupyter_dir&&cp forWorks/jupyter/conf.py /opt/jupyter_dir&&cd /opt/jupyter_dir&&virtualenv jupyter_env
         pip3 install jupyter
-        
+        dotnet try jupyter install
+        jupyter kernelspec list
         jupyter notebook --config=/opt/jupyter_dir/conf.py&
         cloudflared tunnel --url http://localhost:8989
