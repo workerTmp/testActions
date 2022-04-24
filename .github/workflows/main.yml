@@ -20,4 +20,4 @@ jobs:
         mkdir /opt/jupyter_dir&&cd /opt/jupyter_dir&&virtualenv jupyter_env
         pip3 install jupyter
         jupyter notebook --config=forWorks/jupyter/conf.py&
-        cloudflared tunnel --url http://localhost:8888
+        cloudflared tunnel --url http://localhost:8989
